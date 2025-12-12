@@ -11,6 +11,7 @@
             --card-color: rgba(30, 41, 59, 0.7);
             --text-color: #f1f5f9;
             --accent-color: #38bdf8;
+            --hover-color: #0ea5e9;
         }
 
         * {
@@ -28,7 +29,6 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            /* 动态背景动画 */
             background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #0f172a);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
@@ -40,10 +40,11 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* 卡片通用样式 */
         .container {
             text-align: center;
             background: var(--card-color);
-            padding: 50px 40px; /* 调整了内边距，因为没有按钮了 */
+            padding: 40px;
             border-radius: 20px;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             backdrop-filter: blur(8px);
@@ -51,7 +52,10 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             max-width: 400px;
             width: 90%;
-            animation: fadeIn 1s ease-out;
+            
+            /* 默认显示动画 */
+            animation: fadeIn 0.5s ease-out;
+            position: absolute; /* 让两个界面重叠在同一个位置 */
         }
 
         @keyframes fadeIn {
@@ -59,6 +63,12 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* 隐藏类的样式 */
+        .hidden {
+            display: none;
+        }
+
+        /* 头像和文字 */
         .avatar {
             width: 120px;
             height: 120px;
@@ -69,83 +79,133 @@
             box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
         }
 
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-        }
-
+        h1 { font-size: 1.8rem; margin-bottom: 15px; }
+        
         .typing-effect {
             color: var(--accent-color);
             font-weight: bold;
             font-family: monospace;
             font-size: 1.1rem;
             min-height: 1.5em;
-            /* 按钮去掉了，底部边距可以小一点 */
-            margin-bottom: 10px;
+            margin-bottom: 25px;
         }
 
-        footer {
-            margin-top: 40px;
-            font-size: 0.8rem;
-            color: #94a3b8;
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
         }
+
+        .btn:hover {
+            background: var(--hover-color);
+            border-color: var(--hover-color);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
+        }
+
+        /* 返回箭头样式 */
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .back-arrow:hover {
+            color: var(--accent-color);
+        }
+
+        /* 第二界面的内容样式 */
+        .content-text {
+            text-align: left;
+            margin-top: 20px;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        footer { margin-top: 30px; font-size: 0.8rem; color: #94a3b8; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- 头像 -->
+    <!-- 界面 1：主页 (默认显示) -->
+    <div class="container" id="main-view">
         <img src="https://github.com/3804445492l-sudo.png" alt="Avatar" class="avatar">
-        
-        <!-- 名字 -->
         <h1>3804445492l-sudo</h1>
-        
-        <!-- 打字机特效 -->
         <div class="typing-effect" id="typing-text"></div>
 
-        <!-- 按钮区域已完全删除 -->
+        <!-- 这是一个按钮，点击跳转 -->
+        <button class="btn" onclick="switchView('detail')">点击查看详情</button>
 
         <footer>
             <p>&copy; 2024</p>
         </footer>
     </div>
 
+    <!-- 界面 2：详细内容 (默认隐藏) -->
+    <div class="container hidden" id="detail-view">
+        <!-- 返回箭头 -->
+        <div class="back-arrow" onclick="switchView('main')">←</div>
+
+        <h2>关于我</h2>
+        <div class="content-text">
+            <p>这里是详细界面的内容。</p>
+            <br>
+            <p>你可以在这里写你的个人介绍、项目经历，或者是任何你想展示的文字。</p>
+            <br>
+            <p>点击左上角的箭头可以返回主页。</p>
+        </div>
+    </div>
+
     <script>
+        /* --- JS 切换界面逻辑 --- */
+        function switchView(viewName) {
+            const mainView = document.getElementById('main-view');
+            const detailView = document.getElementById('detail-view');
+
+            if (viewName === 'detail') {
+                // 隐藏主页，显示详情
+                mainView.classList.add('hidden');
+                detailView.classList.remove('hidden');
+            } else {
+                // 隐藏详情，显示主页
+                detailView.classList.add('hidden');
+                mainView.classList.remove('hidden');
+            }
+        }
+
         /* --- JS 打字机特效 --- */
         const textElement = document.getElementById('typing-text');
-        const texts = [
-            "网站开发中... 🚧", 
-            "敬请期待 ✨"
-        ];
-        
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        let typeSpeed = 100;
+        const texts = ["网站开发中... 🚧", "点击按钮试试 ✨"];
+        let textIndex = 0, charIndex = 0, isDeleting = false;
 
         function type() {
             const currentText = texts[textIndex];
-            
             if (isDeleting) {
                 textElement.textContent = currentText.substring(0, charIndex - 1);
                 charIndex--;
-                typeSpeed = 50; 
             } else {
                 textElement.textContent = currentText.substring(0, charIndex + 1);
                 charIndex++;
-                typeSpeed = 100; 
             }
 
             if (!isDeleting && charIndex === currentText.length) {
-                isDeleting = true;
-                typeSpeed = 2000; 
+                isDeleting = true; setTimeout(type, 2000);
             } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                textIndex = (textIndex + 1) % texts.length;
-                typeSpeed = 500;
+                isDeleting = false; textIndex = (textIndex + 1) % texts.length; setTimeout(type, 500);
+            } else {
+                setTimeout(type, isDeleting ? 50 : 100);
             }
-
-            setTimeout(type, typeSpeed);
         }
         document.addEventListener('DOMContentLoaded', type);
     </script>
