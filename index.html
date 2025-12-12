@@ -3,211 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dy_故雪</title>
+    <title>测试页面</title>
     <style>
-        /* --- CSS 样式部分 --- */
-        :root {
-            --bg-color: #0f172a;
-            --card-color: rgba(30, 41, 59, 0.7);
-            --text-color: #f1f5f9;
-            --accent-color: #38bdf8;
-            --hover-color: #0ea5e9;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #0f172a);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* 卡片通用样式  */
-        .container {
-            text-align: center;
-            background: var(--card-color);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 400px;
-            width: 90%;
-            
-            /* 默认显示动画 */
-            animation: fadeIn 0.5s ease-out;
-            position: absolute; /* 让两个界面重叠在同一个位置 */
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* 隐藏类的样式 */
-        .hidden {
-            display: none;
-        }
-
-        /* 头像和文字 */
-        .avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 3px solid var(--accent-color);
-            margin-bottom: 20px;
-            object-fit: cover;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
-        }
-
-        h1 { font-size: 1.8rem; margin-bottom: 15px; }
-        
-        .typing-effect {
-            color: var(--accent-color);
-            font-weight: bold;
-            font-family: monospace;
-            font-size: 1.1rem;
-            min-height: 1.5em;
-            margin-bottom: 25px;
-        }
-
-        /* 按钮样式 */
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-
-        .btn:hover {
-            background: var(--hover-color);
-            border-color: var(--hover-color);
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
-        }
-
-        /* 返回箭头样式 */
-        .back-arrow {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.6);
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .back-arrow:hover {
-            color: var(--accent-color);
-        }
-
-        /* 第二界面的内容样式 */
-        .content-text {
-            text-align: left;
-            margin-top: 20px;
-            line-height: 1.6;
-            color: #cbd5e1;
-        }
-
-        footer { margin-top: 30px; font-size: 0.8rem; color: #94a3b8; }
+        body { background-color: #0f172a; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { text-align: center; background: rgba(30, 41, 59, 0.7); padding: 40px; border-radius: 20px; width: 300px; border: 1px solid #333; position: absolute; }
+        .btn { padding: 10px 20px; background: #38bdf8; border: none; border-radius: 5px; cursor: pointer; color: #000; font-weight: bold; margin-top: 20px; }
+        .hidden { display: none; }
+        .back-arrow { position: absolute; top: 15px; left: 15px; font-size: 24px; cursor: pointer; color: #38bdf8; }
     </style>
 </head>
 <body>
 
-    <!-- 界面 1：主页 (默认显示) -->
-    <div class="container" id="main-view">
-        <img src="https://github.com/3804445492l-sudo.png" alt="Avatar" class="avatar">
-        <h1>3804445492l-sudo</h1>
-        <div class="typing-effect" id="typing-text"></div>
-
-        <!-- 这是一个按钮，点击跳转 -->
-        <button class="btn" onclick="switchView('detail')">注入器</button>
-
-        <footer>
-            <p>&copy; 2024</p>
-        </footer>
+    <!-- 界面 1：主页 -->
+    <div class="container" id="page1">
+        <h1>我是主界面</h1>
+        <p>点击下面按钮去界面 2</p>
+        <button class="btn" onclick="goToPage2()">点击查看详情</button>
     </div>
 
-    <!-- 界面 2：详细内容 (默认隐藏) -->
-    <div class="container hidden" id="detail-view">
-        <!-- 返回箭头 -->
-        <div class="back-arrow" onclick="switchView('main')">←</div>
-
-        <h2>关于我</h2>
-        <div class="content-text">
-            <p>抖音故雪</p>
-            <br>
-            <p>没什么可说的.........</p>
-            <br>
-            <p>点击左上角的箭头可以返回</p>
-        </div>
+    <!-- 界面 2：详情页 (默认隐藏) -->
+    <div class="container hidden" id="page2">
+        <div class="back-arrow" onclick="goBack()">←</div>
+        <h1>这是界面 2</h1>
+        <p>你成功跳转过来了！</p>
+        <p>点击左上角箭头返回。</p>
     </div>
 
     <script>
-        /* --- JS 切换界面逻辑 --- */
-        function switchView(viewName) {
-            const mainView = document.getElementById('main-view');
-            const detailView = document.getElementById('detail-view');
-
-            if (viewName === 'detail') {
-                // 隐藏主页，显示详情
-                mainView.classList.add('hidden');
-                detailView.classList.remove('hidden');
-            } else {
-                // 隐藏详情，显示主页
-                detailView.classList.add('hidden');
-                mainView.classList.remove('hidden');
-            }
+        function goToPage2() {
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.remove('hidden');
         }
-
-        /* --- JS 打字机特效 --- */
-        const textElement = document.getElementById('typing-text');
-        const texts = ["网站开发中... 🚧", "点击按钮试试 ✨"];
-        let textIndex = 0, charIndex = 0, isDeleting = false;
-
-        function type() {
-            const currentText = texts[textIndex];
-            if (isDeleting) {
-                textElement.textContent = currentText.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                textElement.textContent = currentText.substring(0, charIndex + 1);
-                charIndex++;
-            }
-
-            if (!isDeleting && charIndex === currentText.length) {
-                isDeleting = true; setTimeout(type, 2000);
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false; textIndex = (textIndex + 1) % texts.length; setTimeout(type, 500);
-            } else {
-                setTimeout(type, isDeleting ? 50 : 100);
-            }
+        function goBack() {
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('page1').classList.remove('hidden');
         }
-        document.addEventListener('DOMContentLoaded', type);
     </script>
 </body>
 </html>
