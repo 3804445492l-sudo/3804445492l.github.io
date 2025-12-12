@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的个人主页 | Home</title>
+    <title>我的个人主页</title>
     <style>
         /* --- CSS 样式部分 --- */
         :root {
@@ -11,7 +11,6 @@
             --card-color: rgba(30, 41, 59, 0.7);
             --text-color: #f1f5f9;
             --accent-color: #38bdf8;
-            --hover-color: #0ea5e9;
         }
 
         * {
@@ -44,7 +43,7 @@
         .container {
             text-align: center;
             background: var(--card-color);
-            padding: 40px;
+            padding: 50px 40px; /* 调整了内边距，因为没有按钮了 */
             border-radius: 20px;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             backdrop-filter: blur(8px);
@@ -72,7 +71,7 @@
 
         h1 {
             font-size: 1.8rem;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .typing-effect {
@@ -81,36 +80,12 @@
             font-family: monospace;
             font-size: 1.1rem;
             min-height: 1.5em;
-            margin-bottom: 30px;
-        }
-
-        .links {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .btn {
-            display: block;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-            text-decoration: none;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .btn:hover {
-            background: var(--hover-color);
-            transform: scale(1.02);
-            box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
-            border-color: var(--hover-color);
+            /* 按钮去掉了，底部边距可以小一点 */
+            margin-bottom: 10px;
         }
 
         footer {
-            margin-top: 30px;
+            margin-top: 40px;
             font-size: 0.8rem;
             color: #94a3b8;
         }
@@ -119,43 +94,28 @@
 <body>
 
     <div class="container">
-        <!-- 头像：如果不显示，请确保 links 是正确的，或者直接用 github 头像 -->
-        <img src="https://github.com/3804445492l.png" alt="Avatar" class="avatar">
+        <!-- 头像 -->
+        <img src="https://github.com/3804445492l-sudo.png" alt="Avatar" class="avatar">
         
-        <h1>你好，我是dy_roblox故雪</h1>
+        <!-- 名字 -->
+        <h1>3804445492l-sudo</h1>
         
-        <!-- 打字机特效文字容器 -->
+        <!-- 打字机特效 -->
         <div class="typing-effect" id="typing-text"></div>
 
-        <!-- 导航链接按钮 -->
-        <div class="links">
-            <a href="https://github.com/3804445492l" class="btn" target="_blank">
-                GitHub 主页
-            </a>
-            <a href="#" class="btn" onclick="alert('博客正在建设中...')">
-                我的博客
-            </a>
-            <a href="#" class="btn" onclick="alert('请发送邮件到...')">
-                联系我
-            </a>
-            <!-- 你可以复制上面的 <a ...> ... </a> 添加更多按钮 -->
-        </div>
+        <!-- 按钮区域已完全删除 -->
 
         <footer>
-            <p>&copy; 2024 Built with Code</p>
+            <p>&copy; 2024</p>
         </footer>
     </div>
 
     <script>
-        /* --- JS 交互部分 --- */
-        
-        // 打字机特效配置
+        /* --- JS 打字机特效 --- */
         const textElement = document.getElementById('typing-text');
         const texts = [
-            "一名开发者 💻", 
-            "热爱开源技术 🌐", 
-            "正在学习新知识 📚",
-            "欢迎来到我的网站 ✨"
+            "网站开发中... 🚧", 
+            "敬请期待 ✨"
         ];
         
         let textIndex = 0;
@@ -169,19 +129,17 @@
             if (isDeleting) {
                 textElement.textContent = currentText.substring(0, charIndex - 1);
                 charIndex--;
-                typeSpeed = 50; // 删除速度快一点
+                typeSpeed = 50; 
             } else {
                 textElement.textContent = currentText.substring(0, charIndex + 1);
                 charIndex++;
-                typeSpeed = 100; // 输入速度正常
+                typeSpeed = 100; 
             }
 
             if (!isDeleting && charIndex === currentText.length) {
-                // 打完了，暂停一下
                 isDeleting = true;
                 typeSpeed = 2000; 
             } else if (isDeleting && charIndex === 0) {
-                // 删完了，切换下一句
                 isDeleting = false;
                 textIndex = (textIndex + 1) % texts.length;
                 typeSpeed = 500;
@@ -189,8 +147,6 @@
 
             setTimeout(type, typeSpeed);
         }
-
-        // 启动打字机
         document.addEventListener('DOMContentLoaded', type);
     </script>
 </body>
