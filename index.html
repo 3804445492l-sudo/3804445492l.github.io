@@ -3,133 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>功能测试</title>
+    <title>Roblox Guxue</title>
     <style>
-        /* 全局样式 */
+        /* --- 1. 基础设置 --- */
         body {
             margin: 0;
             padding: 0;
-            height: 100vh;
-            background-color: #0d1117; /* 深色背景 */
+            background-color: #0f172a; /* 深蓝黑色背景 */
             color: white;
-            font-family: sans-serif;
+            font-family: 'Segoe UI', sans-serif;
+            height: 100vh; /* 占满全屏 */
+            overflow: hidden; /* 禁止滚动 */
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
         }
 
-        /* 两个界面的容器 */
-        .page-container {
+        /* --- 2. 界面容器 --- */
+        .screen {
+            position: absolute;
             width: 100%;
             height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: absolute; /* 让两个界面重叠 */
-            top: 0;
-            left: 0;
-            transition: transform 0.3s ease-in-out, opacity 0.3s ease;
+            transition: transform 0.4s ease-in-out; /* 切换时的平滑动画 */
         }
 
-        /* 界面 1：主页 */
-        #page-home {
-            background: linear-gradient(135deg, #1e3a8a, #000000);
+        /* 界面 A: 主页 */
+        #screen-home {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
             z-index: 1;
+            transform: translateX(0); /* 默认显示 */
         }
 
-        /* 界面 2：详情页 */
-        #page-detail {
-            background: #161b22;
+        /* 界面 B: 详情页 */
+        #screen-detail {
+            background-color: #000000;
             z-index: 2;
-            /* 默认先把它藏起来（移到屏幕右边） */
-            transform: translateX(100%); 
-            opacity: 0;
+            transform: translateX(100%); /* 默认藏在屏幕右边 */
         }
 
-        /* 激活状态：当界面显示时 */
-        .active {
+        /* --- 3. 动画控制类 --- */
+        /* 当给详情页加上这个类，它就滑进来了 */
+        .slide-in {
             transform: translateX(0) !important;
-            opacity: 1 !important;
         }
-
-        /* 隐藏状态：主页移走 */
-        .inactive {
-            transform: translateX(-20%) !important;
+        
+        /* 当给主页加上这个类，它就稍微往左退一点 */
+        .slide-out {
+            transform: translateX(-30%);
             opacity: 0.5;
         }
 
-        /* 按钮样式 */
-        .btn {
+        /* --- 4. 按钮样式 --- */
+        .btn-enter {
             padding: 15px 40px;
-            font-size: 18px;
-            background-color: #238636;
+            font-size: 20px;
+            font-weight: bold;
             color: white;
+            background-color: #3b82f6; /* 亮蓝色 */
             border: none;
-            border-radius: 8px;
+            border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            transition: transform 0.1s;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.5);
+            transition: transform 0.2s;
         }
-        .btn:active { transform: scale(0.95); }
+        
+        .btn-enter:active {
+            transform: scale(0.95); /* 点击缩放效果 */
+        }
 
-        /* 返回箭头样式 */
+        /* --- 5. 返回箭头样式 --- */
         .back-arrow {
             position: absolute;
             top: 30px;
             left: 30px;
-            font-size: 30px;
+            font-size: 35px;
+            color: #cbd5e1;
             cursor: pointer;
-            padding: 10px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
             width: 50px;
             height: 50px;
             display: flex;
             justify-content: center;
             align-items: center;
+            border-radius: 50%;
+            transition: background 0.3s;
         }
-        .back-arrow:hover { background: rgba(255,255,255,0.2); }
+
+        .back-arrow:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
 
         h1 { margin-bottom: 30px; }
-        p { color: #8b949e; max-width: 600px; padding: 0 20px; line-height: 1.6; }
+        p { color: #94a3b8; }
+
     </style>
 </head>
 <body>
 
-    <!-- 界面 1：主页 -->
-    <div id="page-home" class="page-container">
-        <h1>欢迎来到主界面</h1>
-        <!-- 按钮 -->
-        <button class="btn" onclick="showDetail()">点击进入详情页</button>
+    <!-- === 界面 1：主页 === -->
+    <div id="screen-home" class="screen">
+        <h1>ROBLOX GUXUE</h1>
+        <button class="btn-enter" onclick="openDetail()">进入界面</button>
     </div>
 
-    <!-- 界面 2：详情页 -->
-    <div id="page-detail" class="page-container">
+    <!-- === 界面 2：内容页 === -->
+    <div id="screen-detail" class="screen">
         <!-- 返回箭头 -->
         <div class="back-arrow" onclick="goBack()">←</div>
         
-        <h1>这是详情界面</h1>
-        <p>你现在看到的是第二个界面。点击左上角的箭头，可以平滑地返回到刚才的页面。</p>
+        <h1>这里是新界面</h1>
+        <p>点击左上角箭头返回主菜单</p>
     </div>
 
     <script>
-        // 获取两个元素
-        const homePage = document.getElementById('page-home');
-        const detailPage = document.getElementById('page-detail');
+        // 获取两个界面元素
+        const homeScreen = document.getElementById('screen-home');
+        const detailScreen = document.getElementById('screen-detail');
 
-        // 点击按钮：显示详情页
-        function showDetail() {
-            detailPage.classList.add('active'); // 详情页进场
-            homePage.classList.add('inactive'); // 主页退后变暗
+        // 打开详情页
+        function openDetail() {
+            detailScreen.classList.add('slide-in');
+            homeScreen.classList.add('slide-out');
         }
 
-        // 点击箭头：返回主页
+        // 返回主页
         function goBack() {
-            detailPage.classList.remove('active'); // 详情页退场
-            homePage.classList.remove('inactive'); // 主页恢复
+            detailScreen.classList.remove('slide-in');
+            homeScreen.classList.remove('slide-out');
         }
     </script>
+
 </body>
 </html>
